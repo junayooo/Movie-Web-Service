@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script
+    crossorigin
+    src="https://unpkg.com/react@17/umd/react.production.min.js"
+  ></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"
+  ></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const root = document.getElementById("root");
+
+    function Time() {
+      const [amount, setAmount] = React.useState(0);
+      const [flipped, setFlipped] = React.useState(false);
+      const onChange = (event) => {
+        setAmount(event.target.value);
+      };
+      const reset = () => {
+        setAmount(0);
+      };
+      const OnFlip = () => {
+        reset();
+        setFlipped((current) => !current);
+      };
+      return (
+        <div>
+          <h3>Time Converter</h3>
+          <div>
+            <label htmlFor="minutes">Minutes</label>
+            {/*
+              <html => JSX문법>
+              for => htmlFor
+              class => className
+          */}
+            <input
+              value={flipped ? amount * 60 : amount}
+              id="minutes"
+              placeholder="Minutes"
+              type="number"
+              onChange={onChange}
+              disabled={flipped}
+            />
+          </div>
+          <div>
+            <label htmlFor="hours">Hours</label>
+            <input
+              value={flipped ? amount : Math.round(amount / 60)}
+              id="hours"
+              placeholder="Hours"
+              type="number"
+              onChange={onChange}
+              disabled={!flipped}
+            />
+          </div>
+          <button onClick={reset}>Reset</button>
+          <button onClick={OnFlip}>{flipped ? "M -> H" : "H -> M"}</button>
+        </div>
+      );
+    }
+    function Distance() {
+      const [amount, setAmount] = React.useState(0);
+      const [flipped, setFlipped] = React.useState(false);
+      const onChange = (event) => {
+        setAmount(event.target.value);
+      };
+      const reset = () => {
+        setAmount(0);
+      };
+      const OnFlip = () => {
+        reset();
+        setFlipped((current) => !current);
+      };
+      return (
+        <div>
+          <h3>Distance Converter</h3>
+          <div>
+            <label htmlFor="km">KM</label>
+            {/*
+              <html => JSX문법>
+              for => htmlFor
+              class => className
+          */}
+            <input
+              value={flipped ? amount * 1.609 : amount}
+              id="km"
+              placeholder="KM"
+              type="number"
+              onChange={onChange}
+              disabled={flipped}
+            />
+          </div>
+          <div>
+            <label htmlFor="mile">Mile</label>
+            <input
+              value={flipped ? amount : amount / 1.609}
+              id="mile"
+              placeholder="Mile"
+              type="number"
+              onChange={onChange}
+              disabled={!flipped}
+            />
+          </div>
+          <button onClick={reset}>Reset</button>
+          <button onClick={OnFlip}>
+            {flipped ? "KM -> Mile" : "Mile -> KM"}
+          </button>
+        </div>
+      );
+    }
+
+    function App() {
+      const [index, setIndex] = React.useState("-1");
+      const onSelect = (event) => {
+        setIndex(event.target.value);
+      };
+      return (
+        <div>
+          <h3>Converter</h3>
+          <select value={index} onChange={onSelect}>
+            <option value="-1">Select!</option>
+            <option value="0">Time</option>
+            <option value="1">Distance</option>
+          </select>
+          <hr />
+          {index === "-1" ? "Please select!" : null}
+          {index === "0" ? <Time /> : null}
+          {index === "1" ? <Distance /> : null}
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, root);
+  </script>
+</html>
+
+<html>
+  <body></body>
+</html>

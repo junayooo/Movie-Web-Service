@@ -11,137 +11,47 @@
   </body>
   <script
     crossorigin
-    src="https://unpkg.com/react@17/umd/react.production.min.js"
+    src="https://unpkg.com/react@17/umd/react.development.js"
   ></script>
   <script
     crossorigin
     src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"
   ></script>
+  <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <script type="text/babel">
-    const root = document.getElementById("root");
-
-    function Time() {
-      const [amount, setAmount] = React.useState(0);
-      const [flipped, setFlipped] = React.useState(false);
-      const onChange = (event) => {
-        setAmount(event.target.value);
-      };
-      const reset = () => {
-        setAmount(0);
-      };
-      const OnFlip = () => {
-        reset();
-        setFlipped((current) => !current);
-      };
+    function Btn({ text, fontSize }) {
       return (
-        <div>
-          <h3>Time Converter</h3>
-          <div>
-            <label htmlFor="minutes">Minutes</label>
-            {/*
-              <html => JSX문법>
-              for => htmlFor
-              class => className
-          */}
-            <input
-              value={flipped ? amount * 60 : amount}
-              id="minutes"
-              placeholder="Minutes"
-              type="number"
-              onChange={onChange}
-              disabled={flipped}
-            />
-          </div>
-          <div>
-            <label htmlFor="hours">Hours</label>
-            <input
-              value={flipped ? amount : Math.round(amount / 60)}
-              id="hours"
-              placeholder="Hours"
-              type="number"
-              onChange={onChange}
-              disabled={!flipped}
-            />
-          </div>
-          <button onClick={reset}>Reset</button>
-          <button onClick={OnFlip}>{flipped ? "M -> H" : "H -> M"}</button>
-        </div>
+        <button
+          style={{
+            backgroundColor: "tomato",
+            padding: "10px 20px",
+            color: "white",
+            border: 0,
+            borderRadius: 10,
+            fontSize: fontSize,
+          }}
+        >
+          {text}
+        </button>
       );
     }
-    function Distance() {
-      const [amount, setAmount] = React.useState(0);
-      const [flipped, setFlipped] = React.useState(false);
-      const onChange = (event) => {
-        setAmount(event.target.value);
-      };
-      const reset = () => {
-        setAmount(0);
-      };
-      const OnFlip = () => {
-        reset();
-        setFlipped((current) => !current);
-      };
-      return (
-        <div>
-          <h3>Distance Converter</h3>
-          <div>
-            <label htmlFor="km">KM</label>
-            {/*
-              <html => JSX문법>
-              for => htmlFor
-              class => className
-          */}
-            <input
-              value={flipped ? amount * 1.609 : amount}
-              id="km"
-              placeholder="KM"
-              type="number"
-              onChange={onChange}
-              disabled={flipped}
-            />
-          </div>
-          <div>
-            <label htmlFor="mile">Mile</label>
-            <input
-              value={flipped ? amount : amount / 1.609}
-              id="mile"
-              placeholder="Mile"
-              type="number"
-              onChange={onChange}
-              disabled={!flipped}
-            />
-          </div>
-          <button onClick={reset}>Reset</button>
-          <button onClick={OnFlip}>
-            {flipped ? "KM -> Mile" : "Mile -> KM"}
-          </button>
-        </div>
-      );
-    }
-
+    Btn.propTypes = {
+      text: PropTypes.string.isRequired,
+      fontSize: PropTypes.number,
+    }; //자료형 오류를 캐치할 수 있음 / .isRequired를 하면 필수조건
     function App() {
-      const [index, setIndex] = React.useState("-1");
-      const onSelect = (event) => {
-        setIndex(event.target.value);
-      };
+      const [value, setValue] = React.useState("save");
+      const changeValue = () => setValue("RevertChanges");
       return (
         <div>
-          <h3>Converter</h3>
-          <select value={index} onChange={onSelect}>
-            <option value="-1">Select!</option>
-            <option value="0">Time</option>
-            <option value="1">Distance</option>
-          </select>
-          <hr />
-          {index === "-1" ? "Please select!" : null}
-          {index === "0" ? <Time /> : null}
-          {index === "1" ? <Distance /> : null}
+          <Btn text="save" fontSize={10} />
+          <Btn text={"submit"} fontSize={20} />
         </div>
       );
     }
-
+    const root = document.getElementById("root");
     ReactDOM.render(<App />, root);
   </script>
 </html>
